@@ -23,7 +23,8 @@ onload = function() {
         game.load.image('player','static/notme.png');
         game.paused = true;
     }
-    
+
+    // some important variables.    
     var player;
     var cursors;
     var interacting = false;
@@ -34,8 +35,16 @@ onload = function() {
 
     var currSec = 0;
     var lastSec = 0;
+
+    // heartbeat initially at 80bps
+    var heartrate = 90;
+    var beatTimer;
     
     // game setup
+    function playBeat() {
+        console.log("BEAT");
+    }
+    
     function create() {
         // Sprites & Physics
         game.add.tileSprite(0,0,1920,1920,'bkg');
@@ -52,6 +61,10 @@ onload = function() {
         t = game.add.text(0,0, text, style);
         t.fixedToCamera = true;
         t.cameraOffset = new Phaser.Point(WIDTH-150, 20);
+
+        // Heartbeat Timer
+        beatTimer = game.timer;
+        beatTimer.add(1000/heartrate, playBeat);
     }
 
     /*
@@ -89,8 +102,8 @@ onload = function() {
      */
     function updateTime() {
         currSec = Math.floor(game.time.time/1000) % 60;
-        console.log("currsec = " + currSec.toString());
-        console.log("lastsec = " + lastSec.toString());
+        //console.log("currsec = " + currSec.toString());
+        //console.log("lastsec = " + lastSec.toString());
         if (timeLeft > 0) {
             if (currSec != lastSec) {
                 timeLeft--;
@@ -108,10 +121,21 @@ onload = function() {
         }
     }
 
+    /*
+     * HEARTRATE
+     * heartrate is a logarithmic decay function of timeLeft.
+     */
+    function updateHeartbeat() {
+        heartrate = Math.floor(-45*Math.log(timeLeft - 100) + 405);
+        beatTimer.add(1000/heartrate, playBeat);
+    } 
+        
+
     // Main Update Function - calls update helpers
     function update() {
         updatePlayer();
         updateTime();
+        updateHeartbeat();
         // for debugging: x simulates mistake being made
         if (game.input.keyboard.isDown(Phaser.Keyboard.X)) {
             mistake = true;
