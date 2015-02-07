@@ -19,6 +19,8 @@ onload = function() {
 
     // load media
     function preload() {
+        
+        
         game.load.image('bkg', 'static/debug-grid-1920x1920.png');
         game.load.image('player','static/notme.png');
         //game.load.audio('heartbeat', 'static/heartbeat.mp3');
@@ -71,6 +73,15 @@ onload = function() {
         //beatSprite = game.add.audio('heartbeat');
         //heartTimer = game.time.events.loop(Phaser.Timer.SECOND * 1/heartrate, playBeat);
     }
+
+    /*
+     * UTILITIES
+     * functions u can call for various checks & whatnot
+     */
+    function isNear(x,y) {
+        var position = new Phaser.Point(x,y);
+        for each (door in doors) {
+            if (
 
     /*
      * UPDATES:
