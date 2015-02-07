@@ -21,6 +21,7 @@ onload = function() {
     function preload() {
         game.load.image('bkg', 'static/debug-grid-1920x1920.png');
         game.load.image('player','static/notme.png');
+        //game.load.audio('heartbeat', 'static/heartbeat.mp3');
         game.paused = true;
     }
 
@@ -37,13 +38,16 @@ onload = function() {
     var lastSec = 0;
 
     // heartbeat initially at 80bps
-    var heartrate = 90;
-    var beatTimer;
-    
+    //var heartrate = 90;
+    //var heartTimer;
+    //var beatSprite;    
+
     // game setup
+    /*
     function playBeat() {
-        console.log("BEAT");
+        beatSprite.play();
     }
+    */
     
     function create() {
         // Sprites & Physics
@@ -54,6 +58,7 @@ onload = function() {
         game.physics.p2.enable(player);
         cursors = game.input.keyboard.createCursorKeys();
         game.camera.follow(player);
+        
        
         // Time Left Creation
         var text = "Time Left: " + timeLeft.toString() + "s";
@@ -63,8 +68,8 @@ onload = function() {
         t.cameraOffset = new Phaser.Point(WIDTH-150, 20);
 
         // Heartbeat Timer
-        beatTimer = game.timer;
-        beatTimer.add(1000/heartrate, playBeat);
+        //beatSprite = game.add.audio('heartbeat');
+        //heartTimer = game.time.events.loop(Phaser.Timer.SECOND * 1/heartrate, playBeat);
     }
 
     /*
@@ -124,10 +129,11 @@ onload = function() {
     /*
      * HEARTRATE
      * heartrate is a logarithmic decay function of timeLeft.
+     * ditching this for now in the interest of time?
      */
     function updateHeartbeat() {
         heartrate = Math.floor(-45*Math.log(timeLeft - 100) + 405);
-        beatTimer.add(1000/heartrate, playBeat);
+        heartTimer.delay = (Phaser.Timer.SECOND * heartrate);
     } 
         
 
@@ -135,9 +141,9 @@ onload = function() {
     function update() {
         updatePlayer();
         updateTime();
-        updateHeartbeat();
+        //updateHeartbeat();
         // for debugging: x simulates mistake being made
-        if (game.input.keyboard.isDown(Phaser.Keyboard.X)) {
+        if (game.input.keyboard.onRelease(Phaser.Keyboard.X)) {
             mistake = true;
         }        
     }
