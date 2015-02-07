@@ -1,0 +1,51 @@
+body {
+    background-color:#1a1a1a;
+} 
+
+.header {
+    opacity:.5;
+}
+
+#display {
+    width:600px;
+    height:500px;
+    margin:auto;
+    margin-top:150px;
+}
+
+#menu {
+    display:block;
+    height:500px;
+    text-align:center;
+    background-color:#afafaf;
+}
+
+#start {
+    margin-top:225px;
+}
+
+#canvas {
+    display:none;
+    height:500px;
+    background-color:#000;
+}
+
+/* 
+ * PURE-BUTTON:
+ * style changes come from online example
+ */
+
+.pure-button {
+    background-color: #1f8dd6;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+}
+
+a.pure-button-primary {
+    background: white;
+    color: #1f8dd6;
+    border-radius: 5px;
+    font-size: 120%;
+}
+
