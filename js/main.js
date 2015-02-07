@@ -20,14 +20,13 @@ onload = function() {
     // load media
     function preload() {
         
-        
-        game.load.image('bkg', 'static/debug-grid-1920x1920.png');
-        game.load.image('player','static/notme.png');
+        game.load.image('bkg', 'assets/debug-grid-1920x1920.png');
+        game.load.image('player','assets/notme.png');
         game.load.tilemap('hall', 'assets/maps/hall.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('tiles', 'assets/sprites/tilesheet.png');
-        game.load.image('small_table_U', 'assets/table_small_U.png');
-        game.load.image('small_table_L', 'assets/table_small_L.png');
-        game.load.image('wallU_switch', 'assets/wallU_switch.png');
+        game.load.image('small_table_U', 'assets/sprites/table_small_U.png');
+        game.load.image('small_table_L', 'assets/sprites/table_small_L.png');
+        game.load.image('wallU_switch', 'assets/sprites/wallU_switch.png');
         //game.load.audio('heartbeat', 'static/heartbeat.mp3');
         game.paused = true;
     }
@@ -35,6 +34,7 @@ onload = function() {
     // some important variables.    
     var player;
     var cursors;
+    var map;
     var interacting = false;
     var mistake = false;
     var outOfTime = false; 
@@ -58,11 +58,11 @@ onload = function() {
     
     function create() {
         // Sprites & Physics
-        game.map = game.map.add.tilemap('hall');
-        game.map.addTilesetImage('tilesheet', 'tiles');
-        game.floor = game.map.createLayer('floor');
-        game.wall = game.map.createLayer('wall');
-        game.map.setCollisionBetween(1, 10000, true, 'wall');
+        map = game.add.tilemap('hall');
+        map.addTilesetImage('tilesheet', 'tiles');
+        game.floor = map.createLayer('floor');
+        game.wall = map.createLayer('wall');
+        map.setCollisionBetween(1, 10000, true, 'wall');
         game.floor.resizeWorld();
         game.add.tileSprite(0,0,1920,1920,'bkg');
         game.world.setBounds(0,0,1920,1920);
@@ -89,10 +89,7 @@ onload = function() {
      * UTILITIES
      * functions u can call for various checks & whatnot
      */
-    function isNear(x,y) {
-        var position = new Phaser.Point(x,y);
-        for each (door in doors) {
-            if (
+
 
     /*
      * UPDATES:
